@@ -115,11 +115,19 @@ class Engine {
 
     // This method finds a random spot where there is no enemy, and puts one in there
     addEnemy() {
-        var enemySpots = GAME_WIDTH / ENEMY_WIDTH;
+        // Game_width = 375
+        // Enemy width = 75
+        // enemy spots = 5
+        var enemySpots = GAME_WIDTH / ENEMY_WIDTH; 
 
         var enemySpot;
         // Keep looping until we find a free enemy spot at random
-        while (!enemySpot || this.enemies[enemySpot]) {
+
+        /* CHANGE: When the var enemySpot takes the value 0 (indicating that a cat should appear in the left most position),
+        the conditional statement (!enemySpot) would become True, and thus the while loop will continue to run until enemySpot
+         obtains a value that is not zero */
+
+        while (enemySpot===undefined || this.enemies[enemySpot]) {
             enemySpot = Math.floor(Math.random() * enemySpots);
         }
 
