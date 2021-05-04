@@ -26,11 +26,17 @@ var images = {};
 });
 
 
+class Entity {
+    render(ctx) {
+        ctx.drawImage(this.sprite, this.x, this.y);
+    }
+}
 
 
 
-class Enemy {
+class Enemy extends Entity {
     constructor(xPos) {
+        super();
         this.x = xPos;
         this.y = -ENEMY_HEIGHT;
         this.sprite = images['enemy.png'];
@@ -42,14 +48,12 @@ class Enemy {
     update(timeDiff) {
         this.y = this.y + timeDiff * this.speed;
     }
-
-    render(ctx) {
-        ctx.drawImage(this.sprite, this.x, this.y);
-    }
 }
 
-class Player {
+
+class Player extends Entity {
     constructor() {
+        super();
         this.x = 2 * PLAYER_WIDTH;
         this.y = GAME_HEIGHT - PLAYER_HEIGHT - 10;
         this.sprite = images['player.png'];
@@ -64,13 +68,7 @@ class Player {
             this.x = this.x + PLAYER_WIDTH;
         }
     }
-
-    render(ctx) {
-        ctx.drawImage(this.sprite, this.x, this.y);
-    }
 }
-
-
 
 
 
@@ -189,6 +187,7 @@ class Engine {
         // Check if player is dead
         if (this.isPlayerDead()) {
             // If they are dead, then it's game over!
+
             this.ctx.font = 'bold 30px Impact';
             this.ctx.fillStyle = '#ffffff';
             this.ctx.fillText(this.score + ' GAME OVER', 5, 30);
@@ -209,26 +208,19 @@ class Engine {
         // TODO: fix this function!
         this.enemies.forEach((enemy) => {
             // player height = 54
-
             // enemy height = 156
-
             // width = 75
 
             if (enemy.x == this.player.x) {
-                
-                if (enemy.y > (GAME_HEIGHT-PLAYER_HEIGHT)) {
+                if (enemy.y >= (this.player.y)) {
                     console.log("Y's are equal");
-                    return true;
+                    return true
                 }
             }
         });
         return false;
     }
 }
-
-
-
-
 
 // This section will start the game
 var gameEngine = new Engine(document.getElementById('app'));
