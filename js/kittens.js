@@ -207,6 +207,21 @@ class Engine {
 
     isPlayerDead() {
         // TODO: fix this function!
+        this.enemies.forEach((enemy) => {
+            // player height = 54
+
+            // enemy height = 156
+
+            // width = 75
+
+            if (enemy.x == this.player.x) {
+                
+                if (enemy.y > (GAME_HEIGHT-PLAYER_HEIGHT)) {
+                    console.log("Y's are equal");
+                    return true;
+                }
+            }
+        });
         return false;
     }
 }
